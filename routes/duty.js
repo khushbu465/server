@@ -2,8 +2,7 @@ const express = require("express");
 const Duty = require("../models/Duty");
 const router = express.Router();
 
-// Create a new duty (with validation)
-router.post("/insert", async (req, res) => {
+router.post("/assign_duty", async (req, res) => {
     try {
         const { date, vehicleId, driverId, conductorId, startTime, duration } = req.body;
 
@@ -16,7 +15,32 @@ router.post("/insert", async (req, res) => {
                 data: ''
             });
         }
+        const driverConflict = await Duty.findOne({
+            date,
+            driverId,
+            startTime
+        });
 
+        if (driverConflict) {
+            return res.send({
+                status: 0,
+                message: "This driver is already assigned to another duty at the same time.",
+                data: '',
+            });
+        }
+        const conductorConflict = await Duty.findOne({
+            date,
+            conductorId,
+            startTime
+        });
+
+        if (conductorConflict) {
+            return res.send({
+                status: 0,
+                message: "This conductor is already assigned to another duty at the same time.",
+                data: '',
+            });
+        }
         const dutyobj = new Duty({
             date,
             vehicleId,
@@ -36,7 +60,7 @@ router.post("/insert", async (req, res) => {
         } else {
             res.send({
                 status: 1,
-                message: "Duty created successfully",
+                message: "Duty assigned successfully",
                 data: saved_data,
             });
         }
@@ -81,6 +105,27 @@ router.get("/duties", async (req, res) => {
         console.log(err)
     }
 });
+// Fetch all duties 
+router.get("/getall", async (req, res) => {
+    try {
 
+        const duties = await Duty.find();
+        if (duties) {
+            res.send({
+                status: 1,
+                message: 'Duty fetch successfully!',
+                data: duties
+            })
+        } else {
+            res.send({
+                status: 0,
+                message: 'Something went wrong!',
+                data: '',
+            })
+        }
+    } catch (err) {
+        console.log(err)
+    }
+});
 
 module.exports = router;

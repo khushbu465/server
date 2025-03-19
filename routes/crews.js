@@ -54,44 +54,4 @@ router.get("/crew", async (req, res) => {
         console.log(err)
     }
 });
-router.get("/get_drivers", async (req, res) => {
-    try {
-        const get_data = await Crew.find({ role: 'Driver' });
-        if (get_data) {
-            res.send({
-                status: 1,
-                message: 'Drivers data fetched successfully!',
-                data: get_data
-            })
-        } else {
-            res.send({
-                status: 0,
-                message: 'Something went wrong!',
-                data: '',
-            })
-        }
-    } catch (err) {
-        console.log(err)
-    }
-});
-router.get("/get_conductor", async (req, res) => {
-    try {
-        const get_data = await Crew.find({ role: 'Conductor' });
-        if (get_data) {
-            res.send({
-                status: 1,
-                message: 'Conductors data fetched successfully!',
-                data: get_data
-            })
-        } else {
-            res.send({
-                status: 0,
-                message: 'Something went wrong!',
-                data: '',
-            })
-        }
-    } catch (err) {
-        console.log(err)
-    }
-});
 module.exports = router;

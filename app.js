@@ -13,8 +13,8 @@ connectDB();
 
 const indexRouter = require("./routes/index");
 const dutyRouter = require("./routes/duty");
-const crewRouter = require("./routes/crew");
-const vehicleRouter = require("./routes/vehicle");
+const crewRouter = require("./routes/crews");
+const vehicleRouter = require("./routes/vehicles");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));

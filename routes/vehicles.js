@@ -5,6 +5,15 @@ const router = express.Router();
 router.post("/insert_vehicle", async (req, res) => {
     try {
         const { name } = req.body;
+        const check_vehicle = await Vehicle.findOne({ name });
+
+        if (check_vehicle) {
+            return res.send({
+                status: 0,
+                message: "Vehicle already exists!",
+                data: '',
+            });
+        }
         const vehicle_obj = new Vehicle({
             name,
         });
