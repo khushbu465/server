@@ -5,4 +5,4 @@ const crewSchema = new mongoose.Schema({
   role: { type: String }
 }, { timestamps: true });
 
-module.exports = mongoose.model("Crew", crewSchema);
+module.exports = mongoose.model("crews", crewSchema);

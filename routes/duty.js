@@ -87,7 +87,17 @@ router.get("/duties", async (req, res) => {
 
         const duties = await Duty.find({
             date: { $gte: new Date(startDate), $lte: new Date(endDate) }
-        });
+        }).populate({
+            path: 'vehicleId',
+            select: "name"
+        }).populate({
+            path: 'driverId',
+            select: "name"
+        })
+            .populate({
+                path: 'conductorId',
+                select: "name"
+            });
         if (duties) {
             res.send({
                 status: 1,
@@ -109,7 +119,18 @@ router.get("/duties", async (req, res) => {
 router.get("/getall", async (req, res) => {
     try {
 
-        const duties = await Duty.find();
+        const duties = await Duty.find()
+            .populate({
+                path: 'vehicleId',
+                select: "name"
+            }).populate({
+                path: 'driverId',
+                select: "name"
+            })
+            .populate({
+                path: 'conductorId',
+                select: "name"
+            });;
         if (duties) {
             res.send({
                 status: 1,

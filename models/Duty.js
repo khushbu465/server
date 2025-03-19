@@ -21,4 +21,4 @@ const dutySchema = new mongoose.Schema({
   duration: { type: Number, required: true } // in minutes
 });
 
-module.exports = mongoose.model("Duty", dutySchema);
+module.exports = mongoose.model("duties", dutySchema);
